@@ -1,0 +1,28 @@
+<mat-form-field>
+    <mat-label>Filter</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
+</mat-form-field>
+
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+  @for (column of columns; track column) {
+  <ng-container [matColumnDef]="column">
+    <th mat-header-cell *matHeaderCellDef>{{ headerMap[column] }}</th>
+    <td mat-cell *matCellDef="let element">{{ element[column] }}</td>
+  </ng-container>
+  }
+
+  <ng-container matColumnDef="actionColumn">
+    <th mat-header-cell *matHeaderCellDef>Action</th>
+    <td mat-cell *matCellDef="let element">
+      <button mat-button [matMenuTriggerFor]="menu"><mat-icon>keyboard_arrow_down</mat-icon></button>
+      <mat-menu #menu="matMenu">
+        @for (action of actionList; track $index) {
+          <button mat-menu-item (click)="onButtonClick(element, action.text)"><mat-icon>{{action.icon}}</mat-icon>{{action.text}}</button>
+        }
+      </mat-menu>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+  <tr mat-row *matRowDef="let row; columns: columnsToDisplay"></tr>
+</table>

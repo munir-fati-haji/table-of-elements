@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { TableComponent } from '../shared/components/table/table.component';
+import { TableComponent } from './shared/components/table/table.component';
+import { TableAction } from './shared/models/table-action';
 
 export interface PeriodicElement {
   name: string;
@@ -32,4 +33,43 @@ const ELEMENT_DATA: PeriodicElement[] = [
 export class AppComponent {
   public displayedColumns = ['name', 'weight', 'symbol', 'position'];
   public rowData: PeriodicElement[] = ELEMENT_DATA;
+  public actionList: TableAction[] = [
+    {
+      icon: 'edit',
+      text: 'Edit',
+    },
+    {
+      icon: 'delete',
+      text: 'Delete',
+    },
+    {
+      icon: 'remove_red_eye',
+      text: 'Preview',
+    },
+  ];
+
+  public onActionClick(value: {event: string, element: PeriodicElement}): void {
+    const EventToActionClickMap: Record<string, () => void> = {
+      Edit: () => this.onEdit(value.element),
+      Delete: () => this.onDelete(value.element),
+      Preview: () => this.onPreview(value.element),
+    };
+    const action = EventToActionClickMap[value.event];
+    action();
+  }
+
+  private onEdit(element: PeriodicElement): void{
+    alert(element);
+
+  }
+
+  private onDelete(element: PeriodicElement): void{
+    alert(element);
+
+  }
+
+  private onPreview(element: PeriodicElement): void{
+    alert(element);
+
+  }
 }
