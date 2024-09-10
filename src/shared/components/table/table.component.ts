@@ -17,24 +17,24 @@ export class TableComponent<T> {
     this.headerMap = this.generateHeaderMap(columns);
   }
   @Input({ required: true }) public set rowData(data: T[]) {
-    this.dataSource = new MatTableDataSource(data)
+    this.dataSource = new MatTableDataSource(data);
   };
-  public headerMap!: { [key: string]: string };
+  public headerMap!: Record<string, string>;
   public columns!: string[];
   public dataSource!: MatTableDataSource<T>;
 
-  public applyFilter(event: Event) {
+  public applyFilter(event: Event): void {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  private generateHeaderMap(columns: string[]): { [key: string]: string } {
+  private generateHeaderMap(columns: string[]): Record<string, string> {
     return columns.reduce(
       (acc, column) => ({
         ...acc,
         [column]: StringUtils.convertCamelCaseToTitleCase(column),
       }),
-      {}
+      {},
     );
   }
 }
