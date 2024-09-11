@@ -35,4 +35,9 @@ interface DialogData {
 })
 export class ManageElementsComponent {
   public readonly data = inject<DialogData>(MAT_DIALOG_DATA);
+  public position = this.data.rowData.position;
+  public name = this.data.rowData.name;
+  public symbol = this.data.rowData.symbol;
+  public weight = this.data.rowData.weight;
+
 }

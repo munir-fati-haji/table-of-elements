@@ -17,11 +17,11 @@ export class DialogUtils {
     component: ComponentType<T>,
     data: Record<string, unknown>,
     width?: string,
-    height?: string,
+    maxHeight?: string,
   ): MatDialogRef<T> {
     return this.matDialog.open(component, {
       width,
-      height,
+      maxHeight,
       data,
       disableClose: true,
     });

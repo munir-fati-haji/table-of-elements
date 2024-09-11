@@ -34,7 +34,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
   styleUrl: './elements.component.scss',
 })
 export class ElementsComponent {
-  public displayedColumns = ['name', 'weight', 'symbol', 'position'];
+  public displayedColumns = ['position', 'name', 'weight', 'symbol'];
   public rowData: PeriodicElement[] = ELEMENT_DATA;
   public actionList: TableAction[] = [
     {

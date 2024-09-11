@@ -1,34 +1,33 @@
-<h2 mat-dialog-title>{{ data.mode }} Elements</h2>
+<h2 mat-dialog-title>{{ data.mode }} Elements [{{ data.rowData.name }}]</h2>
 
 <mat-dialog-content>
-  <mat-form-field appearance="fill">
-    <mat-label>Fill form field</mat-label>
-    <input matInput placeholder="Placeholder" />
-    <mat-hint>Hint: 123</mat-hint>
-  </mat-form-field>
+  <div class="d-flex gap-3">
+    <mat-form-field appearance="fill" class="flex-grow-1">
+      <mat-label>Position</mat-label>
+      <input [value]="position" matInput placeholder="Ex. 1" />
+      <mat-hint>Hint: 1</mat-hint>
+    </mat-form-field>
+    <mat-form-field appearance="fill" class="flex-grow-1">
+      <mat-label>Name</mat-label>
+      <input [value]="name" matInput placeholder="Ex. Hydrogen" />
+    </mat-form-field>
+  </div>
 
-  <mat-form-field appearance="fill">
-    <mat-label>Fill form field</mat-label>
-    <input matInput placeholder="Placeholder" />
-    <mat-hint>Hint: 123</mat-hint>
-  </mat-form-field>
-
-  <mat-form-field appearance="fill">
-    <mat-label>Fill form field</mat-label>
-    <input matInput placeholder="Placeholder" />
-    <mat-hint>Hint: 123</mat-hint>
-  </mat-form-field>
-
-
-  <mat-form-field appearance="fill">
-    <mat-label>Fill form field</mat-label>
-    <input matInput placeholder="Placeholder" />
-    <mat-hint>Hint: 123</mat-hint>
-  </mat-form-field>
-
+  <div class="d-flex gap-3">
+    <mat-form-field appearance="fill" class="flex-grow-1">
+      <mat-label>Weight</mat-label>
+      <input [(value)]="weight" matInput placeholder="Ex. 1.0079" />
+    </mat-form-field>
+    <mat-form-field appearance="fill" class="flex-grow-1">
+      <mat-label>Symbol</mat-label>
+      <input [value]="symbol" matInput placeholder="Ex. H" />
+    </mat-form-field>
+  </div>
 </mat-dialog-content>
 
 <mat-dialog-actions>
-    <button mat-raised-button>Save</button>
-    <button mat-raised-button color="warn" [mat-dialog-close]="true">Close</button>
+  <button mat-raised-button>Save</button>
+  <button mat-raised-button color="warn" [mat-dialog-close]="true">
+    Close
+  </button>
 </mat-dialog-actions>
