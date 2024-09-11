@@ -1,4 +1,4 @@
-<h2 mat-dialog-title>{{ data.mode }} Elements [{{ data.rowData.name }}]</h2>
+<p mat-dialog-title>{{ data.mode }} Elements [{{ data.rowData.name }}]</p>
 
 <mat-dialog-content>
   <div class="d-flex gap-3">
@@ -16,7 +16,7 @@
   <div class="d-flex gap-3">
     <mat-form-field appearance="fill" class="flex-grow-1">
       <mat-label>Weight</mat-label>
-      <input [(value)]="weight" matInput placeholder="Ex. 1.0079" />
+      <input [value]="weight" matInput placeholder="Ex. 1.0079" />
     </mat-form-field>
     <mat-form-field appearance="fill" class="flex-grow-1">
       <mat-label>Symbol</mat-label>

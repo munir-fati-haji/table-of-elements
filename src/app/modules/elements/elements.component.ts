@@ -3,6 +3,10 @@ import { TableAction } from '../../shared/models/table-action';
 import { TableComponent } from '../../shared/components/table/table.component';
 import { DialogUtils } from '../../shared/utils/dialog-utils';
 import { ManageElementsComponent } from './modals/manage-elements/manage-elements.component';
+import { YesNoConfirmationModalComponent } from '../../shared/components/yes-no-confirmation-modal/yes-no-confirmation-modal.component';
+import { filter } from 'rxjs';
+import { PreviewElementsComponent } from './modals/preview-elements/preview-elements.component';
+import { NotificationUtils } from '../../shared/utils/notification-utils';
 
 export interface PeriodicElement {
   name: string;
@@ -11,7 +15,10 @@ export interface PeriodicElement {
   symbol: string;
 }
 
-interface ActionEvent {event: string, element: PeriodicElement}
+interface ActionEvent {
+  event: string;
+  element: PeriodicElement;
+}
 
 const ELEMENT_DATA: PeriodicElement[] = [
   { position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H' },
@@ -61,17 +68,31 @@ export class ElementsComponent {
     action();
   }
 
-  private onEdit(value: ActionEvent): void{
-    DialogUtils.openLargeDialog(ManageElementsComponent, { rowData: value.element, mode: value.event });
+  private onEdit(value: ActionEvent): void {
+    DialogUtils.openLargeDialog(ManageElementsComponent, {
+      rowData: value.element,
+      mode: value.event,
+    });
   }
 
-  private onDelete(element: ActionEvent): void{
-    alert(element);
-
+  private onDelete(value: ActionEvent): void {
+    const message =
+      'Are you sure? You are about to delete the selected elements data';
+    DialogUtils.openLargeDialog(YesNoConfirmationModalComponent, { message })
+      .afterClosed()
+      .pipe(filter(Boolean))
+      .subscribe(() => {
+        this.rowData = this.rowData.filter(
+          (data) => data.position !== value.element.position,
+        );
+        NotificationUtils.showWarningNotification(`Sucessfully deleted element ${value.element.name}`);
+      });
   }
 
-  private onPreview(element: ActionEvent): void{
-    alert(element);
-
+  private onPreview(value: ActionEvent): void {
+    DialogUtils.openLargeDialog(PreviewElementsComponent, {
+      rowData: value.element,
+      mode: value.event,
+    });
   }
 }

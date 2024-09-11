@@ -5,6 +5,7 @@ import { routes } from './app.routes';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideDialogInitializer } from './shared/utils/dialog-utils';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { provideNotificationInitializer } from './shared/utils/notification-utils';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -13,5 +14,6 @@ export const appConfig: ApplicationConfig = {
     provideAnimationsAsync(),
     provideDialogInitializer(),
     importProvidersFrom([BrowserAnimationsModule]),
+    provideNotificationInitializer(),
   ],
 };

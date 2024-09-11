@@ -1,4 +1,11 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { StringUtils } from '../../utils/string-utils';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -7,11 +14,22 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { TableAction } from '../../models/table-action';
 import { MatIconModule } from '@angular/material/icon';
+import { MatSort, MatSortModule } from '@angular/material/sort';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-table',
   standalone: true,
-  imports: [MatTableModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatMenuModule, MatIconModule],
+  imports: [
+    MatTableModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatMenuModule,
+    MatIconModule,
+    MatSortModule,
+    MatPaginatorModule,
+  ],
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss'],
 })
@@ -23,13 +41,19 @@ export class TableComponent<T> {
   }
   @Input({ required: true }) public set rowData(data: T[]) {
     this.dataSource = new MatTableDataSource(data);
-  };
+    this.updatePaginatorAndSorting();
+  }
   @Input() public actionList!: TableAction[];
-  @Output() public actionClick = new EventEmitter<{event: string, element: T}>();
+  @Output() public actionClick = new EventEmitter<{
+    event: string;
+    element: T;
+  }>();
   public headerMap!: Record<string, string>;
   public columns!: string[];
   public columnsToDisplay!: string[];
   public dataSource!: MatTableDataSource<T>;
+  @ViewChild(MatSort) sort!: MatSort;
+  @ViewChild(MatPaginator) public paginator!: MatPaginator;
 
   public applyFilter(event: Event): void {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -38,6 +62,11 @@ export class TableComponent<T> {
 
   public onButtonClick(element: T, event: string): void {
     this.actionClick.emit({ element, event });
+  }
+
+  private updatePaginatorAndSorting(): void {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
   private generateHeaderMap(columns: string[]): Record<string, string> {

@@ -12,3 +12,29 @@ body {
 
 /* Importing Datepicker SCSS file. */
 @import "../node_modules/ngx-bootstrap/datepicker/bs-datepicker";
+
+@mixin snackbar-styles($bg-color) {
+  .mat-mdc-snackbar-surface {
+    background-color: $bg-color !important;
+  }
+
+  .mdc-button .mdc-button__label {
+    color: white;
+  }
+}
+
+.success-snackbar {
+  @include snackbar-styles(green);
+}
+
+.info-snackbar {
+  @include snackbar-styles(#138496); 
+}
+
+.error-snackbar {
+  @include snackbar-styles(#c82333); 
+}
+
+.warning-snackbar {
+  @include snackbar-styles(#e69422);
+}
