@@ -7,42 +7,28 @@ import { YesNoConfirmationModalComponent } from '../../shared/components/yes-no-
 import { filter } from 'rxjs';
 import { PreviewElementsComponent } from './modals/preview-elements/preview-elements.component';
 import { NotificationUtils } from '../../shared/utils/notification-utils';
-
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
-}
+import { MatCardModule } from '@angular/material/card';
+import { ElementsService } from './services/elements.service';
+import { PeriodicElement } from './models/periodic-element';
+import { PipeUtils } from '../../shared/utils/pipe-utils';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 interface ActionEvent {
   event: string;
   element: PeriodicElement;
 }
 
-const ELEMENT_DATA: PeriodicElement[] = [
-  { position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H' },
-  { position: 2, name: 'Helium', weight: 4.0026, symbol: 'He' },
-  { position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li' },
-  { position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be' },
-  { position: 5, name: 'Boron', weight: 10.811, symbol: 'B' },
-  { position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C' },
-  { position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N' },
-  { position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O' },
-  { position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F' },
-  { position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne' },
-];
-
 @Component({
   selector: 'app-elements',
   standalone: true,
-  imports: [TableComponent],
+  imports: [TableComponent, MatCardModule, MatButtonModule, MatIconModule],
   templateUrl: './elements.component.html',
   styleUrl: './elements.component.scss',
 })
 export class ElementsComponent {
   public displayedColumns = ['position', 'name', 'weight', 'symbol'];
-  public rowData: PeriodicElement[] = ELEMENT_DATA;
+  public rowData!: PeriodicElement[];
   public actionList: TableAction[] = [
     {
       icon: 'edit',
@@ -58,9 +44,26 @@ export class ElementsComponent {
     },
   ];
 
+  constructor(private elementsService: ElementsService) {
+    this.initiateComponentData();
+  }
+
+  private initiateComponentData(): void {
+    this.elementsService.getElements().pipe(
+      PipeUtils.handleError('Failed to fetch elements data'),
+      PipeUtils.handleSuccess('Successfully fetched elements'),
+    ).subscribe((data) => this.rowData = data);
+  }
+
+  public addElement(): void {
+    const element = {} as PeriodicElement;
+    const event = 'Add';
+    this.onManageElement({ element,event });
+  }
+
   public onActionClick(value: ActionEvent): void {
     const EventToActionClickMap: Record<string, () => void> = {
-      Edit: () => this.onEdit(value),
+      Edit: () => this.onManageElement(value),
       Delete: () => this.onDelete(value),
       Preview: () => this.onPreview(value),
     };
@@ -68,11 +71,36 @@ export class ElementsComponent {
     action();
   }
 
-  private onEdit(value: ActionEvent): void {
+  private onManageElement(value: ActionEvent): void {
     DialogUtils.openLargeDialog(ManageElementsComponent, {
       rowData: value.element,
       mode: value.event,
+    })
+      .afterClosed()
+      .pipe(filter(Boolean), PipeUtils.handleSuccess(`Data ${value.event} Successful`))
+      .subscribe((data) => {
+        const EventToActionMap: Record<string, () => void> = {
+          Edit: () => this.updateRowDataAfterEdit(value.element.position, data.element),
+          Add: () => this.updateRowDataAfterAdd(data.element),
+        };
+
+        const action = EventToActionMap[value.event];
+        action();
+      });
+  }
+
+  private updateRowDataAfterEdit(position: number, element: PeriodicElement): void {
+    this.rowData = this.rowData.map((rowData) => {
+      if (rowData.position === position) {
+        return element;
+      }
+
+      return rowData;
     });
+  }
+
+  private updateRowDataAfterAdd(element: PeriodicElement): void {
+    this.rowData = [...this.rowData, element];
   }
 
   private onDelete(value: ActionEvent): void {
@@ -80,12 +108,14 @@ export class ElementsComponent {
       'Are you sure? You are about to delete the selected elements data';
     DialogUtils.openLargeDialog(YesNoConfirmationModalComponent, { message })
       .afterClosed()
-      .pipe(filter(Boolean))
+      .pipe(
+        PipeUtils.handleError(`Sucessfully deleted element ${value.element.name}`),
+        filter(Boolean),
+      )
       .subscribe(() => {
         this.rowData = this.rowData.filter(
           (data) => data.position !== value.element.position,
         );
-        NotificationUtils.showWarningNotification(`Sucessfully deleted element ${value.element.name}`);
       });
   }
 

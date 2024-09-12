@@ -33,7 +33,7 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss'],
 })
-export class TableComponent<T> {
+export class TableComponent<T> implements AfterViewInit{
   @Input({ required: true }) public set displayedColumns(columns: string[]) {
     this.columns = columns;
     this.columnsToDisplay = ['actionColumn', ...this.columns];
@@ -54,6 +54,10 @@ export class TableComponent<T> {
   public dataSource!: MatTableDataSource<T>;
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) public paginator!: MatPaginator;
+
+  public ngAfterViewInit(): void {
+    this.updatePaginatorAndSorting();
+  }
 
   public applyFilter(event: Event): void {
     const filterValue = (event.target as HTMLInputElement).value;

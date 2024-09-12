@@ -6,8 +6,8 @@ import {
   MatDialogContent,
   MatDialogTitle,
 } from '@angular/material/dialog';
-import { PeriodicElement } from '../../elements.component';
 import { MatButtonModule } from '@angular/material/button';
+import { PeriodicElement } from '../../models/periodic-element';
 
 interface DialogData {
   rowData: PeriodicElement;
