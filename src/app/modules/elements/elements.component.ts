@@ -50,7 +50,7 @@ export class ElementsComponent {
   protected addElement(): void {
     const element = {} as PeriodicElement;
     const event = 'Add';
-    this.onManageElement({ element,event });
+    this.onManageElement({ element, event });
   }
 
   protected onActionClick(value: ActionEvent): void {
@@ -64,10 +64,13 @@ export class ElementsComponent {
   }
 
   protected initiateComponentData(): void {
-    this.elementsService.getElements().pipe(
-      PipeUtils.handleError('Failed to fetch elements data'),
-      PipeUtils.handleSuccess('Successfully fetched elements'),
-    ).subscribe((data) => this.rowData = data);
+    this.elementsService
+      .getElements()
+      .pipe(
+        PipeUtils.handleError('Failed to fetch elements data'),
+        PipeUtils.handleSuccess('Successfully fetched elements'),
+      )
+      .subscribe((data) => (this.rowData = data));
   }
 
   private onManageElement(value: ActionEvent): void {
@@ -76,10 +79,14 @@ export class ElementsComponent {
       mode: value.event,
     })
       .afterClosed()
-      .pipe(filter(Boolean), PipeUtils.handleSuccess(`Data ${value.event} Successful`))
+      .pipe(
+        filter(Boolean),
+        PipeUtils.handleSuccess(`Data ${value.event} Successful`),
+      )
       .subscribe((element: PeriodicElement) => {
         const EventToActionMap: Record<string, () => void> = {
-          Edit: () => this.updateRowDataAfterEdit(value.element.position, element),
+          Edit: () =>
+            this.updateRowDataAfterEdit(value.element.position, element),
           Add: () => this.updateRowDataAfterAdd(element),
         };
 
@@ -88,7 +95,10 @@ export class ElementsComponent {
       });
   }
 
-  private updateRowDataAfterEdit(position: number, element: PeriodicElement): void {
+  private updateRowDataAfterEdit(
+    position: number,
+    element: PeriodicElement,
+  ): void {
     this.rowData = this.rowData.map((rowData) => {
       if (rowData.position === position) {
         return element;
@@ -108,7 +118,9 @@ export class ElementsComponent {
     DialogUtils.openLargeDialog(YesNoConfirmationModalComponent, { message })
       .afterClosed()
       .pipe(
-        PipeUtils.handleError(`Successfully deleted element ${value.element.name}`),
+        PipeUtils.handleError(
+          `Successfully deleted element ${value.element.name}`,
+        ),
         filter(Boolean),
       )
       .subscribe(() => {

@@ -9,8 +9,7 @@ describe('PreviewElementsComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [PreviewElementsComponent],
-    })
-      .compileComponents();
+    }).compileComponents();
 
     fixture = TestBed.createComponent(PreviewElementsComponent);
     component = fixture.componentInstance;

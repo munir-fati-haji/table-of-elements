@@ -1,17 +1,22 @@
 <mat-form-field class="w-100">
   <mat-label>Filter</mat-label>
-  <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Hydrogen" #input />
+  <input
+    matInput
+    (keyup)="applyFilter($event)"
+    placeholder="Ex. Hydrogen"
+    #input
+  />
 </mat-form-field>
 
 <div class="mat-elevation-z8">
   <table mat-table [dataSource]="dataSource" matSort>
     @for (column of columns; track column) {
-    <ng-container [matColumnDef]="column">
-      <th mat-header-cell mat-sort-header *matHeaderCellDef>
-        {{ headerMap[column] }}
-      </th>
-      <td mat-cell *matCellDef="let element">{{ element[column] }}</td>
-    </ng-container>
+      <ng-container [matColumnDef]="column">
+        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+          {{ headerMap[column] }}
+        </th>
+        <td mat-cell *matCellDef="let element">{{ element[column] }}</td>
+      </ng-container>
     }
     @if (actionList.length) {
       <ng-container matColumnDef="actionColumn">
@@ -22,17 +27,24 @@
           </button>
           <mat-menu #menu="matMenu">
             @for (action of actionList; track $index) {
-            <button mat-menu-item (click)="onButtonClick(element, action.text)">
-              <mat-icon>{{ action.icon }}</mat-icon
-              >{{ action.text }}
-            </button>
+              <button
+                mat-menu-item
+                (click)="onButtonClick(element, action.text)"
+              >
+                <mat-icon>{{ action.icon }}</mat-icon
+                >{{ action.text }}
+              </button>
             }
           </mat-menu>
         </td>
       </ng-container>
     }
-  
-    <tr mat-header-row *matHeaderRowDef="columnsToDisplay" class="bg-secondary text-white"></tr>
+
+    <tr
+      mat-header-row
+      *matHeaderRowDef="columnsToDisplay"
+      class="bg-secondary text-white"
+    ></tr>
     <tr mat-row *matRowDef="let row; columns: columnsToDisplay"></tr>
 
     <tr class="mat-row" *matNoDataRow>
@@ -47,7 +59,7 @@
   </table>
 
   <mat-paginator
-    class="bg-secondary text-white "
+    class="bg-secondary text-white"
     [pageSizeOptions]="[10, 25, 100]"
     [showFirstLastButtons]="true"
     aria-label="Select page of users"

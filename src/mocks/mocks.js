@@ -1,4 +1,4 @@
-const elements = require('./elements/elements')
+const elements = require("./elements/elements");
 
 module.exports = {
   data: {
@@ -6,5 +6,5 @@ module.exports = {
   },
   endpoints: {
     ...elements.endpoints,
-  }
-}
+  },
+};

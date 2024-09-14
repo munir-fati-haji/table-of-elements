@@ -33,17 +33,17 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss'],
 })
-export class TableComponent<T> implements AfterViewInit{
-  @Input({ required: true }) protected set displayedColumns(columns: string[]) {
+export class TableComponent<T> implements AfterViewInit {
+  @Input({ required: true }) public set displayedColumns(columns: string[]) {
     this.columns = columns;
     this.columnsToDisplay = ['actionColumn', ...this.columns];
     this.headerMap = this.generateHeaderMap(columns);
   }
-  @Input({ required: true }) protected set rowData(data: T[]) {
+  @Input({ required: true }) public set rowData(data: T[]) {
     this.dataSource = new MatTableDataSource(data);
     this.updatePaginatorAndSorting();
   }
-  @Input() protected actionList!: TableAction[];
+  @Input() public actionList!: TableAction[];
   @Output() protected actionClick = new EventEmitter<{
     event: string;
     element: T;

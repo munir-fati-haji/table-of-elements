@@ -1,10 +1,10 @@
-const elements = require('./elements.json')
+const elements = require("./elements.json");
 
 module.exports = {
   data: {
-    ...elements
+    ...elements,
   },
   endpoints: {
-    "/api/elements" : "/elements"
-  }
-}
+    "/api/elements": "/elements",
+  },
+};

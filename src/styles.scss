@@ -28,11 +28,11 @@ body {
 }
 
 .info-snackbar {
-  @include snackbar-styles(#138496); 
+  @include snackbar-styles(#138496);
 }
 
 .error-snackbar {
-  @include snackbar-styles(#c82333); 
+  @include snackbar-styles(#c82333);
 }
 
 .warning-snackbar {
