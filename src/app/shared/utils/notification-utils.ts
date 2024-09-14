@@ -4,16 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class NotificationUtils {
   public static snackBar: MatSnackBar;
 
-  private static openNotification(message: string, panelClass: string): void {
-    this.snackBar.open(message, '✖', {
-      duration: 5000,
-      panelClass,
-      horizontalPosition: 'end',
-      verticalPosition: 'top',
-    });
-  }
-
-  public static showSucessNotification(message: string): void {
+  public static showSuccessNotification(message: string): void {
     this.openNotification(message, 'success-snackbar');
   }
 
@@ -27,6 +18,15 @@ export class NotificationUtils {
 
   public static showErrorNotification(message: string): void {
     this.openNotification(message, 'error-snackbar');
+  }
+
+  private static openNotification(message: string, panelClass: string): void {
+    this.snackBar.open(message, '✖', {
+      duration: 5000,
+      panelClass,
+      horizontalPosition: 'end',
+      verticalPosition: 'top',
+    });
   }
 }
 

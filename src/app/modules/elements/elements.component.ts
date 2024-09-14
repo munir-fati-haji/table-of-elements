@@ -6,7 +6,6 @@ import { ManageElementsComponent } from './modals/manage-elements/manage-element
 import { YesNoConfirmationModalComponent } from '../../shared/components/yes-no-confirmation-modal/yes-no-confirmation-modal.component';
 import { filter } from 'rxjs';
 import { PreviewElementsComponent } from './modals/preview-elements/preview-elements.component';
-import { NotificationUtils } from '../../shared/utils/notification-utils';
 import { MatCardModule } from '@angular/material/card';
 import { ElementsService } from './services/elements.service';
 import { PeriodicElement } from './models/periodic-element';
@@ -27,9 +26,9 @@ interface ActionEvent {
   styleUrl: './elements.component.scss',
 })
 export class ElementsComponent {
-  public displayedColumns = ['position', 'name', 'weight', 'symbol'];
-  public rowData!: PeriodicElement[];
-  public actionList: TableAction[] = [
+  protected displayedColumns = ['position', 'name', 'weight', 'symbol'];
+  protected rowData!: PeriodicElement[];
+  protected actionList: TableAction[] = [
     {
       icon: 'edit',
       text: 'Edit',
@@ -44,24 +43,17 @@ export class ElementsComponent {
     },
   ];
 
-  constructor(private elementsService: ElementsService) {
+  public constructor(private elementsService: ElementsService) {
     this.initiateComponentData();
   }
 
-  private initiateComponentData(): void {
-    this.elementsService.getElements().pipe(
-      PipeUtils.handleError('Failed to fetch elements data'),
-      PipeUtils.handleSuccess('Successfully fetched elements'),
-    ).subscribe((data) => this.rowData = data);
-  }
-
-  public addElement(): void {
+  protected addElement(): void {
     const element = {} as PeriodicElement;
     const event = 'Add';
     this.onManageElement({ element,event });
   }
 
-  public onActionClick(value: ActionEvent): void {
+  protected onActionClick(value: ActionEvent): void {
     const EventToActionClickMap: Record<string, () => void> = {
       Edit: () => this.onManageElement(value),
       Delete: () => this.onDelete(value),
@@ -71,6 +63,13 @@ export class ElementsComponent {
     action();
   }
 
+  protected initiateComponentData(): void {
+    this.elementsService.getElements().pipe(
+      PipeUtils.handleError('Failed to fetch elements data'),
+      PipeUtils.handleSuccess('Successfully fetched elements'),
+    ).subscribe((data) => this.rowData = data);
+  }
+
   private onManageElement(value: ActionEvent): void {
     DialogUtils.openLargeDialog(ManageElementsComponent, {
       rowData: value.element,
@@ -78,10 +77,10 @@ export class ElementsComponent {
     })
       .afterClosed()
       .pipe(filter(Boolean), PipeUtils.handleSuccess(`Data ${value.event} Successful`))
-      .subscribe((data) => {
+      .subscribe((element: PeriodicElement) => {
         const EventToActionMap: Record<string, () => void> = {
-          Edit: () => this.updateRowDataAfterEdit(value.element.position, data.element),
-          Add: () => this.updateRowDataAfterAdd(data.element),
+          Edit: () => this.updateRowDataAfterEdit(value.element.position, element),
+          Add: () => this.updateRowDataAfterAdd(element),
         };
 
         const action = EventToActionMap[value.event];
@@ -109,7 +108,7 @@ export class ElementsComponent {
     DialogUtils.openLargeDialog(YesNoConfirmationModalComponent, { message })
       .afterClosed()
       .pipe(
-        PipeUtils.handleError(`Sucessfully deleted element ${value.element.name}`),
+        PipeUtils.handleError(`Successfully deleted element ${value.element.name}`),
         filter(Boolean),
       )
       .subscribe(() => {

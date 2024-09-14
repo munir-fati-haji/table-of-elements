@@ -12,6 +12,6 @@ export class PipeUtils {
   }
 
   public static handleSuccess<T>(message: string): OperatorFunction<T, T> {
-    return tap(() => NotificationUtils.showSucessNotification(message));
+    return tap(() => NotificationUtils.showSuccessNotification(message));
   }
 }

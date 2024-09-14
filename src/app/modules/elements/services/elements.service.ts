@@ -7,7 +7,7 @@ import { PeriodicElement } from '../models/periodic-element';
   providedIn: 'root',
 })
 export class ElementsService {
-  private apiUrl = 'http://localhost:3000/api/elements';
+  private readonly apiUrl = 'http://localhost:3000/api/elements';
 
   public constructor(private http: HttpClient) { }
 
