@@ -74,7 +74,7 @@ export class ManageElementsComponent implements OnInit {
       symbol: this.symbol() as string,
       weight: this.weight() as number,
     };
-    this.matDialogRef.close( { mode: this.data.mode, element } );
+    this.matDialogRef.close(element);
   }
 
   private setElementData(element: PeriodicElement): void {

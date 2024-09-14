@@ -21,11 +21,11 @@ interface DialogData {
   styleUrl: './yes-no-confirmation-modal.component.scss',
 })
 export class YesNoConfirmationModalComponent {
-  public readonly data = inject<DialogData>(MAT_DIALOG_DATA);
+  protected readonly data = inject<DialogData>(MAT_DIALOG_DATA);
 
   public constructor(private matDialogRef: MatDialogRef<YesNoConfirmationModalComponent>) {}
 
-  public closeDialog(confirmed: boolean): void {
+  protected closeDialog(confirmed: boolean): void {
     this.matDialogRef.close(confirmed);
   }
 }
