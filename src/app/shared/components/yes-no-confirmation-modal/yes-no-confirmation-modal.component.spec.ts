@@ -9,8 +9,7 @@ describe('YesNoConfirmationModalComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [YesNoConfirmationModalComponent],
-    })
-      .compileComponents();
+    }).compileComponents();
 
     fixture = TestBed.createComponent(YesNoConfirmationModalComponent);
     component = fixture.componentInstance;

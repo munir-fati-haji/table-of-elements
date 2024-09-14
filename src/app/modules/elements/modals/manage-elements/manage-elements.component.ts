@@ -42,10 +42,12 @@ export class ManageElementsComponent implements OnInit {
   protected readonly name = signal<string | null>(null);
   protected readonly symbol = signal<string | null>(null);
   protected readonly weight = signal<number | null>(null);
-  protected saveDisabled =  true;
+  protected saveDisabled = true;
   protected ELEMENTS_MODAL_FIELDS = ELEMENTS_MODAL_FIELDS;
 
-  public constructor(public matDialogRef: MatDialogRef<ManageElementsComponent>) {}
+  public constructor(
+    public matDialogRef: MatDialogRef<ManageElementsComponent>,
+  ) {}
 
   public ngOnInit(): void {
     if (this.data.mode === ELEMENT_MODAL_MODE.EDIT) {
@@ -54,7 +56,10 @@ export class ManageElementsComponent implements OnInit {
     this.checkIfFormIsValid();
   }
 
-  protected handleInputChange(event: Event, field: ELEMENTS_MODAL_FIELDS): void {
+  protected handleInputChange(
+    event: Event,
+    field: ELEMENTS_MODAL_FIELDS,
+  ): void {
     const value = (event.target as HTMLInputElement).value;
     switch (field) {
     case ELEMENTS_MODAL_FIELDS.POSITION:
@@ -85,6 +90,7 @@ export class ManageElementsComponent implements OnInit {
   }
 
   private checkIfFormIsValid(): void {
-    this.saveDisabled = !this.position() || !this.name() || !this.symbol() || !this.weight();
+    this.saveDisabled =
+      !this.position() || !this.name() || !this.symbol() || !this.weight();
   }
 }

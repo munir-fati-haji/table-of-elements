@@ -33,7 +33,7 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss'],
 })
-export class TableComponent<T> implements AfterViewInit{
+export class TableComponent<T> implements AfterViewInit {
   @Input({ required: true }) protected set displayedColumns(columns: string[]) {
     this.columns = columns;
     this.columnsToDisplay = ['actionColumn', ...this.columns];

@@ -9,7 +9,7 @@ import { PeriodicElement } from '../models/periodic-element';
 export class ElementsService {
   private readonly apiUrl = 'http://localhost:3000/api/elements';
 
-  public constructor(private http: HttpClient) { }
+  public constructor(private http: HttpClient) {}
 
   public getElements(): Observable<PeriodicElement[]> {
     return this.http.get<PeriodicElement[]>(this.apiUrl);
@@ -19,7 +19,10 @@ export class ElementsService {
     return this.http.post<PeriodicElement>(this.apiUrl, element);
   }
 
-  public updateElement(id: number, element: PeriodicElement): Observable<PeriodicElement> {
+  public updateElement(
+    id: number,
+    element: PeriodicElement,
+  ): Observable<PeriodicElement> {
     return this.http.put<PeriodicElement>(`${this.apiUrl}/${id}`, element);
   }
 
@@ -27,4 +30,3 @@ export class ElementsService {
     return this.http.delete<PeriodicElement>(`${this.apiUrl}/${id}`);
   }
 }
-

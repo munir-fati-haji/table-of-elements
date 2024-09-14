@@ -5,7 +5,6 @@ const angular = require("angular-eslint");
 const sonarjs = require("eslint-plugin-sonarjs");
 const importPlugin = require("eslint-plugin-import");
 
-
 module.exports = tseslint.config(
   {
     files: ["**/*.ts"],
@@ -61,8 +60,8 @@ module.exports = tseslint.config(
           skipComments: true,
         },
       ],
-      "indent": ["error", 2],
-      "max-lines": ["error", {max: 300}],
+      indent: ["error", 2],
+      "max-lines": ["error", { max: 300 }],
       "@typescript-eslint/explicit-member-accessibility": "warn",
       "@typescript-eslint/explicit-function-return-type": [
         "warn",
@@ -177,5 +176,5 @@ module.exports = tseslint.config(
       "@angular-eslint/template/eqeqeq": "error",
       "@angular-eslint/template/banana-in-box": "error",
     },
-  }
+  },
 );

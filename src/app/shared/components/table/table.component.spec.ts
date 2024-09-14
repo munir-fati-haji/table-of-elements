@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TableComponent } from './table.component';
 
 interface Test {
-  id: 10
+  id: 10;
 }
 
 describe('TableComponent', () => {
@@ -13,8 +13,7 @@ describe('TableComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [TableComponent],
-    })
-      .compileComponents();
+    }).compileComponents();
 
     fixture = TestBed.createComponent(TableComponent<Test>);
     component = fixture.componentInstance;

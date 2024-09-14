@@ -16,14 +16,22 @@ interface DialogData {
 @Component({
   selector: 'app-yes-no-confirmation-modal',
   standalone: true,
-  imports: [MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose, MatButtonModule],
+  imports: [
+    MatDialogTitle,
+    MatDialogContent,
+    MatDialogActions,
+    MatDialogClose,
+    MatButtonModule,
+  ],
   templateUrl: './yes-no-confirmation-modal.component.html',
   styleUrl: './yes-no-confirmation-modal.component.scss',
 })
 export class YesNoConfirmationModalComponent {
   protected readonly data = inject<DialogData>(MAT_DIALOG_DATA);
 
-  public constructor(private matDialogRef: MatDialogRef<YesNoConfirmationModalComponent>) {}
+  public constructor(
+    private matDialogRef: MatDialogRef<YesNoConfirmationModalComponent>,
+  ) {}
 
   protected closeDialog(confirmed: boolean): void {
     this.matDialogRef.close(confirmed);
