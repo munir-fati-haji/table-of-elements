@@ -118,7 +118,7 @@ export class ElementsComponent {
     DialogUtils.openLargeDialog(YesNoConfirmationModalComponent, { message })
       .afterClosed()
       .pipe(
-        PipeUtils.handleError(
+        PipeUtils.handleSuccess(
           `Successfully deleted element ${value.element.name}`,
         ),
         filter(Boolean),

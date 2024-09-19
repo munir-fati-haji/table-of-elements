@@ -62,12 +62,12 @@ export class ManageElementsComponent implements OnInit {
   ): void {
     const value = (event.target as HTMLInputElement).value;
     switch (field) {
-    case ELEMENTS_MODAL_FIELDS.POSITION:
-    case ELEMENTS_MODAL_FIELDS.WEIGHT:
-      this[field].set(Number(value));
-      break;
-    default:
-      this[field].set(value as string);
+      case ELEMENTS_MODAL_FIELDS.POSITION:
+      case ELEMENTS_MODAL_FIELDS.WEIGHT:
+        this[field].set(Number(value));
+        break;
+      default:
+        this[field].set(value as string);
     }
     this.checkIfFormIsValid();
   }

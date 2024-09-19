@@ -1,0 +1,60 @@
+<mat-toolbar class="mat-elevation-z3">
+  <!-- Left Section -->
+  <section class="d-flex align-items-center gap-2 fw-bold">
+    <button mat-icon-button (click)="collapsed.set(!collapsed())">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <img [ngSrc]="LOGO" [height]="40" [width]="40" alt="Company Logo" />
+    <div>
+      <span class="company-name">{{ COMPANY_NAME.toUpperCase() }}</span> |
+      {{ APPLICATION_NAME }}
+    </div>
+  </section>
+
+  <!-- Center Section -->
+  <section class="flex-fill d-flex justify-content-center"></section>
+
+  <!-- Right Section -->
+  <section class="d-flex align-items-center gap-3">
+    <button mat-icon-button>
+      <mat-icon>notifications_active</mat-icon>
+    </button>
+
+    <img
+      class="rounded-circle"
+      [ngSrc]="'assets/images/userpic.jpg'"
+      [height]="40"
+      [width]="40"
+      alt="User Profile"
+    />
+
+    <div>
+      <p class="mb-0 fs-6">Munir Fati Haji</p>
+      <p class="mb-0 fs-6">Admin</p>
+    </div>
+  </section>
+</mat-toolbar>
+
+<mat-sidenav-container>
+  <mat-sidenav opened mode="side" [style.width]="sidenavWidth()">
+    <mat-nav-list>
+      @for (menu of menuItems; track menu) {
+        <a
+          mat-list-item
+          [routerLink]="menu.route"
+          routerLinkActive
+          #rla="routerLinkActive"
+          [activated]="rla.isActive"
+        >
+          <mat-icon matListItemIcon matTooltip="{{ menu.label }}">
+            {{ menu.icon }}</mat-icon
+          >
+          <span matListItemTitle>{{ menu.label }}</span>
+        </a>
+      }
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content [style.margin-left]="sidenavWidth()">
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

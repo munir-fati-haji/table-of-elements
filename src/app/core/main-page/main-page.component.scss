@@ -1,0 +1,23 @@
+mat-toolbar {
+  position: relative;
+  z-index: 5;
+  .company-name {
+    color: lightgreen;
+    text-shadow:
+      1px 1px 2px green,
+      0 0 1em whitesmoke,
+      0 0 0.2em darkolivegreen;
+  }
+}
+
+mat-sidenav-container {
+  height: calc(100vh - 64px);
+  background-color: lightgreen;
+  mat-sidenav {
+    background-color: lightgreen;
+  }
+  mat-sidenav-content {
+    padding: 24px;
+    background-color: whitesmoke;
+  }
+}
