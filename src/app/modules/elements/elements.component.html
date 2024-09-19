@@ -2,8 +2,8 @@
   <mat-card-header
     class="d-flex justify-content-between align-items-center pb-1"
   >
-    <mat-card-title>Table of Elements</mat-card-title>
-    <button mat-flat-button (click)="addElement()">
+    <mat-card-title>Table of Elements Using Angular Material Table (Main Task)</mat-card-title>
+    <button mat-flat-button (click)="stateManagementService.addElement()">
       <mat-icon>add</mat-icon>Add Element
     </button>
   </mat-card-header>
@@ -11,9 +11,9 @@
   <mat-card-content>
     <app-table
       [displayedColumns]="displayedColumns"
-      [rowData]="rowData"
+      [rowData]="stateManagementService.rowData()"
       [actionList]="actionList"
-      (actionClick)="onActionClick($event)"
+      (actionClick)="stateManagementService.onActionClick($event)"
     ></app-table>
   </mat-card-content>
 </mat-card>

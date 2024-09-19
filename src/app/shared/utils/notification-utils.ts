@@ -24,7 +24,7 @@ export class NotificationUtils {
     this.snackBar.open(message, '✖', {
       duration: 5000,
       panelClass,
-      horizontalPosition: 'end',
+      horizontalPosition: 'center',
       verticalPosition: 'top',
     });
   }
