@@ -42,6 +42,11 @@ export class MainPageComponent {
       label: 'Elements',
       route: 'elements',
     },
+    {
+      icon: 'table',
+      label: 'Elements AG Grid',
+      route: 'elements-ag-grid',
+    },
   ];
   public collapsed = signal(true);
   public sidenavWidth = computed(() => (this.collapsed() ? '60px' : '200px'));

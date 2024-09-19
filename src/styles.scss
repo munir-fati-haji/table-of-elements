@@ -38,3 +38,7 @@ body {
 .warning-snackbar {
   @include snackbar-styles(#e69422);
 }
+
+@import "../node_modules/ag-grid-community/styles/ag-grid.css";
+@import "../node_modules/ag-grid-community/styles/ag-theme-alpine.css";
+

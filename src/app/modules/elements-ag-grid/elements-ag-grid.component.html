@@ -1,0 +1,28 @@
+<mat-card>
+  <mat-card-header
+    class="d-flex justify-content-between align-items-center pb-1"
+  >
+    <mat-card-title>Table of Elements Using Ag Grid</mat-card-title>
+    <button mat-flat-button (click)="stateManagementService.addElement()">
+      <mat-icon>add</mat-icon>Add Element
+    </button>
+  </mat-card-header>
+
+  <mat-card-content>
+    <ag-grid-angular
+      class="ag-theme-alpine"
+      domLayout="autoHeight"
+      [rowData]="stateManagementService.rowData()"
+      [defaultColDef]="defaultColDef"
+      [columnDefs]="columnDefs"
+      [pagination]="true"
+      [paginationPageSize]="10"
+      [enableCellTextSelection]="true"
+      [tooltipShowDelay]="0"
+      (gridReady)="onGridReady($event)"
+      (gridSizeChanged)="onGridSizeChanged()"
+      [paginationPageSizeSelector]="[5, 10, 25, 50, 100]"
+      (cellEditingStopped)="onCellEditingStopped($event)"
+    ></ag-grid-angular>
+  </mat-card-content>
+</mat-card>
