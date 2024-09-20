@@ -18,7 +18,6 @@ import {
 } from 'ag-grid-community';
 import { ELEMENTS_MODAL_FIELDS } from '../elements/enums/fields';
 import { StateManagementService } from '../state-management.service';
-import { NotificationUtils } from '../../shared/utils/notification-utils';
 import { ActionMenuRendererComponent } from '../../shared/ag-grid/cell-renderers/action-menu-renderer.component';
 import { ActionEvent } from '../elements/elements.component';
 
@@ -64,11 +63,8 @@ export class ElementsAgGridComponent {
   }: CellEditingStoppedEvent<PeriodicElement>): void {
     const rowData = data as PeriodicElement;
     this.stateManagementService.updateRowDataAfterEdit(
-      rowData.position,
+      rowData.id as number,
       rowData,
-    );
-    NotificationUtils.showSuccessNotification(
-      'Row Data has been updated successfully.',
     );
   }
 

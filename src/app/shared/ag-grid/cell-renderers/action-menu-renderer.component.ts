@@ -45,7 +45,9 @@ interface CellRendererParams<T> extends ICellRendererParams {
   standalone: true,
   imports: [MatButtonModule, MatMenuModule, MatIconModule],
 })
-export class ActionMenuRendererComponent<T> implements ICellRendererAngularComp {
+export class ActionMenuRendererComponent<T>
+implements ICellRendererAngularComp
+{
   public params!: CellRendererParams<T>;
   public actions: TableAction[] = [];
 
