@@ -6,5 +6,6 @@ module.exports = {
   },
   endpoints: {
     "/api/elements": "/elements",
+    "/api/elements/:id": "/elements/:id",
   },
 };
