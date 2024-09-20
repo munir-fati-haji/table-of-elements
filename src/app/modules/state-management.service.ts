@@ -3,7 +3,7 @@ import { PeriodicElement } from './elements/models/periodic-element';
 import { TableAction } from '../shared/models/table-action';
 import { DialogUtils } from '../shared/utils/dialog-utils';
 import { ManageElementsComponent } from './elements/modals/manage-elements/manage-elements.component';
-import {filter, tap} from 'rxjs';
+import { filter, tap } from 'rxjs';
 import { PipeUtils } from '../shared/utils/pipe-utils';
 import { ActionEvent } from './elements/elements.component';
 import { YesNoConfirmationModalComponent } from '../shared/components/yes-no-confirmation-modal/yes-no-confirmation-modal.component';
@@ -59,7 +59,9 @@ export class StateManagementService {
       .pipe(
         filter(Boolean),
         PipeUtils.handleSuccess(`Data ${value.event} Successful`),
-        tap((element) => this.manageElements(element as PeriodicElement, value))
+        tap((element) =>
+          this.manageElements(element as PeriodicElement, value),
+        ),
       )
       .subscribe();
   }
@@ -70,7 +72,7 @@ export class StateManagementService {
       .pipe(
         PipeUtils.handleError('Failed to fetch elements data'),
         PipeUtils.handleSuccess('Successfully fetched elements'),
-        tap((data) => this.rowData.set(data))
+        tap((data) => this.rowData.set(data)),
       )
       .subscribe();
   }
@@ -115,16 +117,14 @@ export class StateManagementService {
         ),
         filter(Boolean),
         PipeUtils.handleError('Failed to delete the selected element'),
-        tap(() => this.deleteRowData(value.element.position))
+        tap(() => this.deleteRowData(value.element.position)),
       )
       .subscribe();
   }
 
   private deleteRowData(position: number): void {
     this.rowData.set(
-      this.rowData().filter(
-        (data) => data.position !== position,
-      ),
+      this.rowData().filter((data) => data.position !== position),
     );
   }
 
