@@ -75,7 +75,7 @@ export class StateManagementService {
       .subscribe();
   }
 
-  public updateRowDataAfterEdit(id: number, element: PeriodicElement): void {
+  public handleUpdate(id: number, element: PeriodicElement): void {
     this.elementsService
       .updateElement(id, element)
       .pipe(
@@ -88,19 +88,19 @@ export class StateManagementService {
 
   private manageElements(element: PeriodicElement, value: ActionEvent): void {
     const EventToActionMap: Record<string, () => void> = {
-      Edit: () => this.updateRowDataAfterEdit(value.element.id as number, element),
-      Add: () => this.updateRowDataAfterAdd(element),
+      Edit: () => this.handleUpdate(value.element.id as number, element),
+      Add: () => this.handleAdd(element),
     };
 
     const action = EventToActionMap[value.event];
     action();
   }
 
-  private updateRowDataAfterAdd(element: PeriodicElement): void {
+  private handleAdd(element: PeriodicElement): void {
     this.elementsService
       .addElement(element)
       .pipe(
-        PipeUtils.handleError(`Data ${element.name} failed`),
+        PipeUtils.handleError(`Failed to add ${element.name}`),
         PipeUtils.handleSuccess(`Data ${element.name} Successfully added`),
         tap(() => this.initiateComponentData()),
       )
