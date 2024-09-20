@@ -88,7 +88,7 @@ export class StateManagementService {
 
   private manageElements(element: PeriodicElement, value: ActionEvent): void {
     const EventToActionMap: Record<string, () => void> = {
-      Edit: () => this.updateRowDataAfterEdit(value.element.position, element),
+      Edit: () => this.updateRowDataAfterEdit(value.element.id as number, element),
       Add: () => this.updateRowDataAfterAdd(element),
     };
 
