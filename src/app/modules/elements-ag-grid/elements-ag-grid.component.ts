@@ -62,7 +62,7 @@ export class ElementsAgGridComponent {
     data,
   }: CellEditingStoppedEvent<PeriodicElement>): void {
     const rowData = data as PeriodicElement;
-    this.stateManagementService.updateRowDataAfterEdit(
+    this.stateManagementService.handleUpdate(
       rowData.id as number,
       rowData,
     );
